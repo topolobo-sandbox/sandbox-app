@@ -1,0 +1,19 @@
+# TopoloBo qa sandbox: only references secrets and variables, run by hand only.
+name: deploy
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "region ${{ vars.SANDBOX_REGION }}"
+        env:
+          API_KEY: ${{ secrets.SANDBOX_GH_API_KEY }}
+          ORG_KEY: ${{ secrets.SANDBOX_ORG_SECRET }}
+  deploy:
+    runs-on: ubuntu-latest
+    environment: qa
+    steps:
+      - run: echo "deploying"
+        env:
+          DEPLOY_TOKEN: ${{ secrets.SANDBOX_DEPLOY_TOKEN }}
+          API_KEY: ${{ secrets.SANDBOX_GH_API_KEY }}
